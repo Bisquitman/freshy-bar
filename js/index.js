@@ -40,66 +40,106 @@ const createCard = ({ id, image, title, price, size }) => {
   return cocktail;
 };
 
-const init = async () => {
-  const getFormData = (form) => {
-    const formData = new FormData(form);
-    const data = {};
+const getFormData = (form) => {
+  const formData = new FormData(form);
+  const data = {};
 
-    for (const [name, value] of formData.entries()) {
-      if (data[name]) {
-        if (!Array.isArray(data[name])) {
-          data[name] = [data[name]];
-        }
-        data[name].push(value);
-      } else {
-        data[name] = value;
+  for (const [name, value] of formData.entries()) {
+    if (data[name]) {
+      if (!Array.isArray(data[name])) {
+        data[name] = [data[name]];
       }
+      data[name].push(value);
+    } else {
+      data[name] = value;
     }
+  }
 
-    return data;
+  return data;
+};
+
+const calculateTotalPrice = (form, startPrice) => {
+  let totalPrice = startPrice;
+
+  const data = getFormData(form);
+
+  if (Array.isArray(data.ingredients)) {
+    data.ingredients.forEach((item) => {
+      totalPrice += price[item] || 0;
+    });
+  } else {
+    totalPrice += price[data.ingredients] || 0;
+  }
+
+  if (Array.isArray(data.topping)) {
+    data.topping.forEach((item) => {
+      totalPrice += price[item] || 0;
+    });
+  } else {
+    totalPrice += price[data.topping] || 0;
+  }
+
+  totalPrice += price[data.cup] || 0;
+
+  return totalPrice;
+};
+
+const calculateMakeYourOwn = () => {
+  const formMakeOwn = document.querySelector('.make__form_make-your-own');
+  const makeInputPrice = formMakeOwn.querySelector('.make__input_price');
+  const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
+
+  const handlerChange = () => {
+    const totalPrice = calculateTotalPrice(formMakeOwn, 150);
+    makeInputPrice.value = totalPrice;
+    makeTotalPrice.innerHTML = `${totalPrice}&nbsp;&#8381;`;
   };
 
-  const calculateTotalPrice = (form, startPrice) => {
-    let totalPrice = startPrice;
+  formMakeOwn.addEventListener('change', handlerChange);
+  handlerChange();
+};
 
-    const data = getFormData(form);
+const calculateAdd = () => {
+  const modalAdd = document.querySelector('.modal_add');
+  const formAdd = document.querySelector('.make__form_add');
+  const makeTitle = modalAdd.querySelector('.make__title');
+  const makeInputTitle = modalAdd.querySelector('.make__input-title');
+  const makeTotalPrice = modalAdd.querySelector('.make__total-price');
+  const makeInputStartPrice = modalAdd.querySelector('.make__input-start-price');
+  const makeInputPrice = modalAdd.querySelector('.make__input-price');
+  const makeTotalSize = modalAdd.querySelector('.make__total-size');
+  const makeInputSize = modalAdd.querySelector('.make__input-size');
 
-    if (Array.isArray(data.ingredients)) {
-      data.ingredients.forEach((item) => {
-        totalPrice += price[item] || 0;
-      });
-    } else {
-      totalPrice += price[data.ingredients] || 0;
-    }
-
-    if (Array.isArray(data.topping)) {
-      data.topping.forEach((item) => {
-        totalPrice += price[item] || 0;
-      });
-    } else {
-      totalPrice += price[data.topping] || 0;
-    }
-
-    totalPrice += price[data.cup] || 0;
-
-    return totalPrice;
+  const handlerChange = () => {
+    const totalPrice = calculateTotalPrice(formAdd, +makeInputStartPrice.value);
+    makeInputPrice.value = totalPrice;
+    makeTotalPrice.innerHTML = `${totalPrice}&nbsp;&#8381;`;
   };
 
-  const calculateMakeYourOwn = () => {
-    const formMakeOwn = document.querySelector('.make__form_make-your-own');
-    const makeInputPrice = formMakeOwn.querySelector('.make__input_price');
-    const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
+  formAdd.addEventListener('change', handlerChange);
 
-    const handlerChange = () => {
-      const totalPrice = calculateTotalPrice(formMakeOwn, 150);
-      makeInputPrice.value = totalPrice;
-      makeTotalPrice.innerHTML = `${totalPrice}&nbsp;&#8381;`;
-    };
-
-    formMakeOwn.addEventListener('change', handlerChange);
+  const fillInForm = (data) => {
+    makeTitle.textContent = data.title;
+    makeInputTitle.value = data.title;
+    makeTotalPrice.innerHTML = `${data.price}&nbsp;&#8381;`;
+    makeInputStartPrice.value = data.price;
+    makeInputPrice.value = data.price;
+    makeTotalSize.textContent = data.size;
+    makeInputSize.value = data.size;
     handlerChange();
   };
 
+  const resetForm = () => {
+    makeTitle.textContent = '';
+    makeTotalPrice.textContent = '';
+    makeTotalSize.textContent = '';
+    formAdd.reset();
+  };
+
+  return { fillInForm, resetForm };
+};
+
+const init = async () => {
   calculateMakeYourOwn();
 
   const goodsListElem = document.querySelector('.goods__list');
@@ -115,6 +155,8 @@ const init = async () => {
   });
 
   goodsListElem.append(...cardsCocktail);
+
+  const { fillInForm, resetForm } = calculateAdd();
 
   modalController({
     modal: '.modal_order',
@@ -132,6 +174,12 @@ const init = async () => {
     modal: '.modal_add',
     btnOpen: '.cocktail__btn_add',
     btnClose: '.modal__close',
+    open({ btn }) {
+      const id = btn.dataset.id;
+      const item = data.find((item) => item.id.toString() === id);
+      fillInForm(item);
+    },
+    close: resetForm,
   });
 };
 

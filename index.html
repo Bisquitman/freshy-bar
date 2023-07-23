@@ -204,30 +204,64 @@
 
         <form class="make__form make__form_make-your-own">
           <fieldset class="make__fieldset make__fieldset_ingredients">
-            <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="ingredients" value="Клубника" id="">Клубника</label>
-            <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="ingredients" value="Банан" id="">Банан</label>
-            <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="ingredients" value="Манго" id="">Манго</label>
-            <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="ingredients" value="Киви" id="">Киви</label>
-            <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="ingredients" value="Маракуйя" id="">Маракуйя</label>
-            <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="ingredients" value="Яблоко" id="">Яблоко</label>
+            <label class="make__label checkbox">
+              <input class="checkbox__input" type="checkbox" name="ingredients" value="Клубника" id="">
+              Клубника
+            </label>
+            <label class="make__label checkbox">
+              <input class="checkbox__input" type="checkbox" name="ingredients" value="Банан" id="">
+              Банан
+            </label>
+            <label class="make__label checkbox">
+              <input class="checkbox__input" type="checkbox" name="ingredients" value="Манго" id="">
+              Манго
+            </label>
+            <label class="make__label checkbox">
+              <input class="checkbox__input" type="checkbox" name="ingredients" value="Киви" id="">
+              Киви
+            </label>
+            <label class="make__label checkbox">
+              <input class="checkbox__input" type="checkbox" name="ingredients" value="Маракуйя" id="">
+              Маракуйя
+            </label>
+            <label class="make__label checkbox">
+              <input class="checkbox__input" type="checkbox" name="ingredients" value="Яблоко" id="">
+              Яблоко
+            </label>
           </fieldset>
 
           <div class="make__wrap-add">
             <fieldset class="make__fieldset make__fieldset_topping">
               <legend class="make__legend">Дополнительно:</legend>
-              <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="topping" value="Мята" id="">Мята <span class="make__upsale">(+50&nbsp;&#8381;)</span></label>
-              <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="topping" value="Лед" id="">Лед <span class="make__upsale">(+10&nbsp;&#8381;)</span></label>
+              <label class="make__label checkbox">
+                <input class="checkbox__input" type="checkbox" name="topping" value="Мята" id="">
+                Мята
+                <span class="make__upsale">(+50&nbsp;&#8381;)</span>
+              </label>
+              <label class="make__label checkbox">
+                <input class="checkbox__input" type="checkbox" name="topping" value="Лед" id="">
+                Лед
+                <span class="make__upsale">(+10&nbsp;&#8381;)</span>
+              </label>
             </fieldset>
             <fieldset class="make__fieldset make__fieldset_cup">
               <legend class="make__legend">Стакан:</legend>
-              <label class="make__label radio"></span><input class="radio__input" type="radio" name="cup" value="Биоразлагаемый" id="">Биоразлагаемый <span class="make__upsale">(+20&nbsp;&#8381;)</label>
-              <label class="make__label radio"></span><input class="radio__input" type="radio" name="cup" value="Пластиковый" id="">Пластиковый <span class="make__upsale">(+0&nbsp;&#8381;)</label>
+              <label class="make__label radio">
+                <input class="radio__input" type="radio" name="cup" value="Биоразлагаемый" id="">
+                Биоразлагаемый
+                <span class="make__upsale">(+20&nbsp;&#8381;)</span>
+              </label>
+              <label class="make__label radio">
+                <input class="radio__input" type="radio" name="cup" value="Пластиковый" id="" checked>
+                Пластиковый
+                <span class="make__upsale">(+0&nbsp;&#8381;)</span>
+              </label>
             </fieldset>
           </div>
 
           <div class="make__footer">
             <button class="make__add-btn btn" type="submit">Добавить</button>
-            
+
             <div class="make__total">
               <input class="make__input make__input_price" type="hidden" name="price" value="150">
               <div class="make__total-price text-red">150&nbsp;&#8381;</div>
@@ -247,25 +281,44 @@
         <h2 class="make__title modal__title">Банановый смузи</h2>
 
         <form class="make__form make__form_add">
+          <input class="make__input-title" type="hidden" name="title">
           <div class="make__wrap-add">
             <fieldset class="make__fieldset make__fieldset_topping">
               <legend class="make__legend">Дополнительно:</legend>
-              <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="" value="Мята" id="">Мята <span class="make__upsale">(+50&nbsp;&#8381;)</span></label>
-              <label class="make__label checkbox"><input class="checkbox__input" type="checkbox" name="" value="Лед" id="">Лед <span class="make__upsale">(+10&nbsp;&#8381;)</span></label>
+              <label class="make__label checkbox">
+                <input class="checkbox__input" type="checkbox" name="topping" value="Мята" id="">
+                Мята
+                <span class="make__upsale">(+50&nbsp;&#8381;)</span>
+              </label>
+              <label class="make__label checkbox">
+                <input class="checkbox__input" type="checkbox" name="topping" value="Лед" id="">
+                Лед
+                <span class="make__upsale">(+10&nbsp;&#8381;)</span></label>
             </fieldset>
             <fieldset class="make__fieldset make__fieldset_cup">
               <legend class="make__legend">Стакан:</legend>
-              <label class="make__label radio"></span><input class="radio__input" type="radio" name="cup" value="Биоразлагаемый" id="">Биоразлагаемый <span class="make__upsale">(+20&nbsp;&#8381;)</label>
-              <label class="make__label radio"></span><input class="radio__input" type="radio" name="cup" value="Пластиковый" id="">Пластиковый <span class="make__upsale">(+0&nbsp;&#8381;)</label>
+              <label class="make__label radio">
+                <input class="radio__input" type="radio" name="cup" value="Биоразлагаемый" id="">
+                Биоразлагаемый
+                <span class="make__upsale">(+20&nbsp;&#8381;)</span>
+              </label>
+              <label class="make__label radio">
+                <input class="radio__input" type="radio" name="cup" value="Пластиковый" id="" checked>
+                Пластиковый
+                <span class="make__upsale">(+0&nbsp;&#8381;)</span>
+              </label>
             </fieldset>
           </div>
 
           <div class="make__footer">
             <button class="make__add-btn btn" type="submit">Добавить</button>
-            
+
             <div class="make__total">
+              <input class="make__input-start-price" type="hidden">
               <div class="make__total-price text-red">340&nbsp;&#8381;</div>
+              <input class="make__input-price" type="hidden" name="price">
               <div class="make__total-size">300мл</div>
+              <input class="make__input-size" type="hidden" name="size">
             </div>
           </div>
         </form>
