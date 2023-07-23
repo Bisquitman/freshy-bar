@@ -63,15 +63,3 @@ const modalController = ({ modal, btnOpen, btnClose, time = 300 }) => {
 
   return {openModal, closeModal};
 };
-
-modalController({
-  modal: '.modal_order',
-  btnOpen: '.btn-order',
-  btnClose: '.modal__close',
-});
-
-modalController({
-  modal: '.modal_make',
-  btnOpen: '.cocktail__btn_make',
-  btnClose: '.modal__close',
-});

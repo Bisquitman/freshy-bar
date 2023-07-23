@@ -302,6 +302,7 @@ iframe {
 .cocktail__field {
   display: flex;
   flex-direction: column;
+  line-height: 1;
 }
 
 .cocktail__title {
