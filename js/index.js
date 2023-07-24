@@ -1,4 +1,4 @@
-const API_URL = 'https://rift-harvest-clock.glitch.me';
+const API_URL = 'https://silent-shell-launch.glitch.me';
 const CART_STORAGE_KEY = 'freshyBarCart';
 
 const price = {
