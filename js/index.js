@@ -226,7 +226,7 @@ const createCartItem = (item) => {
               ? item.topping.map(
                   (toppingItem) =>
                     `<li class="topping__item">${toppingItem}</li>`,
-                )
+                ).toString().replace(",", "")
               : `<li class="topping__item">${item.topping}</li>`
             : ''
         }        
