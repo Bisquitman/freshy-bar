@@ -139,6 +139,12 @@ iframe {
   border: 1px solid #d5b4a8;
 }
 
+.btn:disabled {
+  background-color: #C1C1C1;
+  pointer-events: none;
+  box-shadow: none;
+}
+
 .logo {
   width: 160px;
 }

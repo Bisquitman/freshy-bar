@@ -38,8 +38,12 @@ const modalController = ({
     transition: opacity ${time}ms ease-in-out;
   `;
 
-  const closeModal = ({ target, code }) => {
+  const closeModal = (event) => {
+    const target = event.target;
+    const code = event.code;
+    
     if (
+      event === 'close' ||
       target === modalElem ||
       (btnClose && target.closest(btnClose)) ||
       code === 'Escape'
@@ -75,6 +79,9 @@ const modalController = ({
   });
 
   modalElem.addEventListener('click', closeModal);
+
+  modalElem.closeModal = closeModal;
+  modalElem.openModal = openModal;
 
   return { openModal, closeModal };
 };

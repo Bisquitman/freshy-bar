@@ -88,7 +88,7 @@
                     <p class="cocktail__size">300мл</p>
                   </div>
                 </div>
-                <button class="btn cocktail__btn cocktail__btn_make" data-id="0">Добавить</button>
+                <button class="btn cocktail__btn cocktail__btn_make" type="button" data-id="0">Добавить</button>
               </div>
             </article>
           </li>
@@ -203,6 +203,8 @@
         <h2 class="make__title modal__title">Собери <span class="text-red">свой</span> смузи</h2>
 
         <form class="make__form make__form_make-your-own">
+          <input class="make__input-title" type="hidden" name="title">
+
           <fieldset class="make__fieldset make__fieldset_ingredients">
             <label class="make__label checkbox">
               <input class="checkbox__input" type="checkbox" name="ingredients" value="Клубника" id="">
@@ -263,8 +265,8 @@
             <button class="make__add-btn btn" type="submit">Добавить</button>
 
             <div class="make__total">
-              <input class="make__input make__input_price" type="hidden" name="price" value="150">
-              <div class="make__total-price text-red">150&nbsp;&#8381;</div>
+              <input class="make__input make__input_price" type="hidden" name="price" value="260">
+              <div class="make__total-price text-red">260&nbsp;&#8381;</div>
               <div class="make__total-size">300мл</div>
             </div>
           </div>

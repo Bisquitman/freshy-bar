@@ -1,4 +1,5 @@
 const API_URL = 'https://rift-harvest-clock.glitch.me';
+const CART_STORAGE_KEY = 'freshyBarCart';
 
 const price = {
   Клубника: 60,
@@ -11,6 +12,29 @@ const price = {
   Биоразлагаемый: 20,
   Лед: 10,
   Пластиковый: 0,
+};
+
+const cartDataControl = {
+  getLS() {
+    return JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
+  },
+  addLS(item) {
+    const cartData = cartDataControl.getLS();
+    item.idls = Math.random().toString(36).substring(2, 10);
+    cartData.push(item);
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartData));
+  },
+  removeLS(idls) {
+    const cartData = cartDataControl.getLS();
+    const index = cartData.findIndex((item) => item.idls === idls);
+    if (index !== -1) {
+      cartData.splice(index, 1);
+    }
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartData));
+  },
+  clearLS() {
+    localStorage.removeItem(CART_STORAGE_KEY);
+  },
 };
 
 const getData = async () => {
@@ -34,7 +58,7 @@ const createCard = ({ id, image, title, price, size }) => {
           <p class="cocktail__size">${size}</p>
         </div>
       </div>
-      <button class="btn cocktail__btn cocktail__btn_add" data-id="${id}">Добавить</button>
+      <button class="btn cocktail__btn cocktail__btn_add" type="button" data-id="${id}">Добавить</button>
     </div>
   `;
   return cocktail;
@@ -84,19 +108,59 @@ const calculateTotalPrice = (form, startPrice) => {
   return totalPrice;
 };
 
+const formControl = (form, cb) => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = getFormData(form);
+    cartDataControl.addLS(data);
+
+    if (cb) {
+      cb();
+    }
+  });
+};
+
 const calculateMakeYourOwn = () => {
-  const formMakeOwn = document.querySelector('.make__form_make-your-own');
-  const makeInputPrice = formMakeOwn.querySelector('.make__input_price');
-  const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
+  const modalMakeOwn = document.querySelector('.modal_make-your-own');
+  const formMakeOwn = modalMakeOwn.querySelector('.make__form_make-your-own');
+  const makeInputTitle = modalMakeOwn.querySelector('.make__input-title');
+  const makeInputPrice = modalMakeOwn.querySelector('.make__input_price');
+  const makeTotalPrice = modalMakeOwn.querySelector('.make__total-price');
+  const makeAddBtn = modalMakeOwn.querySelector('.make__add-btn');
+  const initialPrice = makeTotalPrice.textContent;
 
   const handlerChange = () => {
-    const totalPrice = calculateTotalPrice(formMakeOwn, 150);
+    const totalPrice = calculateTotalPrice(formMakeOwn, 260);
+    const data = getFormData(formMakeOwn);
+
+    if (data.ingredients) {
+      const ingredients = Array.isArray(data.ingredients)
+        ? data.ingredients.join(', ')
+        : data.ingredients;
+
+      makeInputTitle.value = `Конструктор: ${ingredients}`;
+      makeAddBtn.disabled = false;
+    } else {
+      makeAddBtn.disabled = true;
+    }
+
     makeInputPrice.value = totalPrice;
     makeTotalPrice.innerHTML = `${totalPrice}&nbsp;&#8381;`;
   };
 
   formMakeOwn.addEventListener('change', handlerChange);
+  formControl(formMakeOwn, () => {
+    modalMakeOwn.closeModal('close');
+  });
   handlerChange();
+
+  const resetForm = () => {
+    makeTotalPrice.innerHTML = initialPrice;
+    makeAddBtn.disabled = true;
+    formMakeOwn.reset();
+  };
+
+  return { resetForm };
 };
 
 const calculateAdd = () => {
@@ -105,7 +169,9 @@ const calculateAdd = () => {
   const makeTitle = modalAdd.querySelector('.make__title');
   const makeInputTitle = modalAdd.querySelector('.make__input-title');
   const makeTotalPrice = modalAdd.querySelector('.make__total-price');
-  const makeInputStartPrice = modalAdd.querySelector('.make__input-start-price');
+  const makeInputStartPrice = modalAdd.querySelector(
+    '.make__input-start-price',
+  );
   const makeInputPrice = modalAdd.querySelector('.make__input-price');
   const makeTotalSize = modalAdd.querySelector('.make__total-size');
   const makeInputSize = modalAdd.querySelector('.make__input-size');
@@ -117,6 +183,7 @@ const calculateAdd = () => {
   };
 
   formAdd.addEventListener('change', handlerChange);
+  formControl(formAdd, () => modalAdd.closeModal('close'));
 
   const fillInForm = (data) => {
     makeTitle.textContent = data.title;
@@ -140,7 +207,7 @@ const calculateAdd = () => {
 };
 
 const init = async () => {
-  calculateMakeYourOwn();
+  const { resetForm: resetFormMakeYourOwn } = calculateMakeYourOwn();
 
   const goodsListElem = document.querySelector('.goods__list');
   const data = await getData();
@@ -156,7 +223,7 @@ const init = async () => {
 
   goodsListElem.append(...cardsCocktail);
 
-  const { fillInForm, resetForm } = calculateAdd();
+  const { fillInForm: fillInFormAdd, resetForm: resetFormAdd } = calculateAdd();
 
   modalController({
     modal: '.modal_order',
@@ -168,6 +235,7 @@ const init = async () => {
     modal: '.modal_make-your-own',
     btnOpen: '.cocktail__btn_make',
     btnClose: '.modal__close',
+    close: resetFormMakeYourOwn,
   });
 
   modalController({
@@ -177,9 +245,9 @@ const init = async () => {
     open({ btn }) {
       const id = btn.dataset.id;
       const item = data.find((item) => item.id.toString() === id);
-      fillInForm(item);
+      fillInFormAdd(item);
     },
-    close: resetForm,
+    close: resetFormAdd,
   });
 };
 
