@@ -24,6 +24,10 @@
 - [Fonts Helper](https://gwfh.mranftl.com/fonts)
 - [API Freshy bar](https://github.com/maksim-leskin/api_freshy)
 - [https://glitch.com/](https://glitch.com/)
+- [PerfectPixel](https://chrome.google.com/webstore/detail/perfectpixel-by-welldonec/dkaagdgjmgdmbnecmcefdhjekcoceebi?hl=ru)
+- [Валидатор HTML](https://validator.w3.org/)
+- [Генератор HTML-дерева](https://yoksel.github.io/html-tree/)
+- [Финальный проект](https://freshy-bar.vercel.app/)
 
 ***
 
