@@ -20,7 +20,7 @@ const scrollController = {
   },
 };
 
-const modalController = ({
+export const modalController = ({
   modal,
   btnOpen,
   btnClose,

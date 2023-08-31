@@ -81,6 +81,10 @@
   transition: color 0.3s;
 }
 
+.order__item-delete svg {
+  pointer-events: none;
+}
+
 .order__item-delete:hover {
   color: #000;
 }
@@ -349,4 +353,55 @@
 .checkbox__input:checked::after,
 .radio__input:checked::after {
   opacity: 1;
+}
+
+/* --------------------------------------- */
+@media (max-width: 940px) {
+  .order__title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal {
+    padding: 20px 0;
+  }
+  
+  .modal__main_order {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 460px) {
+  .modal__main {
+    padding: 24px 15px;
+  }
+  .order__title {
+    margin-bottom: 20px;
+  }
+  .order__name {
+    margin-bottom: 4px;
+  }
+  .order__list {
+    margin-bottom: 20px;
+  }
+  .order__item {
+    padding: 8px 0;
+  }
+  .order__topping-list {
+    font-size: 10px;
+  }
+  .order__topping-item {
+    margin-bottom: 4px;
+  }
+  .order__price {
+    margin-bottom: 20px;
+  }
+  .order__form {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 8px;
+  }
+  .order__submit {
+    margin-top: 12px;
+  }
 }
